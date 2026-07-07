@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>UUID Generator</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #667eea,
+            #764ba2
+        );
+
+    color: #222;
+}
+
+
+.container {
+
+    width: 420px;
+    max-width: 90%;
+
+    padding: 40px;
+
+    background:
+        rgba(255,255,255,0.92);
+
+    border-radius: 24px;
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.2);
+
+    text-align:center;
+
+}
+
+
+h1 {
+
+    margin:0 0 10px;
+
+    font-size:32px;
+
+    letter-spacing:-1px;
+
+}
+
+
+.subtitle {
+
+    color:#666;
+
+    margin-bottom:30px;
+
+}
+
+
+.uuid-box {
+
+    background:#f5f7fb;
+
+    border-radius:14px;
+
+    padding:18px;
+
+    font-family:
+        "SFMono-Regular",
+        Consolas,
+        monospace;
+
+    font-size:16px;
+
+    word-break:break-all;
+
+    margin-bottom:25px;
+
+    border:1px solid #e5e7eb;
+
+}
+
+
+.buttons {
+
+    display:flex;
+
+    gap:12px;
+
+}
+
+
+button {
+
+    flex:1;
+
+    border:none;
+
+    padding:14px;
+
+    border-radius:12px;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+
+.generate {
+
+    background:#667eea;
+
+    color:white;
+
+}
+
+
+.copy {
+
+    background:#111827;
+
+    color:white;
+
+}
+
+
+button:hover {
+
+    transform:translateY(-2px);
+
+    opacity:.9;
+
+}
+
+
+.footer {
+
+    margin-top:25px;
+
+    font-size:13px;
+
+    color:#777;
+
+}
+
+
+@media(max-width:500px){
+
+    .container{
+
+        padding:30px 20px;
+
+    }
+
+    h1{
+
+        font-size:26px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<h1>UUID Generator</h1>
+
+<div class="subtitle">
+Generate secure random UUID instantly
+</div>
+
+
+<div id="uuid"
+class="uuid-box">
+Click generate
+</div>
+
+
+<div class="buttons">
+
+<button
+class="generate"
+onclick="generateUUID()">
+Generate
+</button>
+
+
+<button
+class="copy"
+onclick="copyUUID()">
+Copy
+</button>
+
+</div>
+
+
+<div class="footer">
+100% Client-side · No data sent
+</div>
+
+
+</div>
+
+
+
+<script>
+
+function generateUUID(){
+
+    let uuid;
+
+
+    if(window.crypto &&
+       crypto.randomUUID){
+
+        uuid = crypto.randomUUID();
+
+    }else{
+
+        uuid =
+        'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+        .replace(/[xy]/g,function(c){
+
+            let r =
+            Math.random()*16|0;
+
+            let v =
+            c==='x'
+            ? r
+            : (r&0x3|0x8);
+
+            return v.toString(16);
+
+        });
+
+    }
+
+
+    document.getElementById("uuid")
+    .innerText=uuid;
+
+}
+
+
+
+function copyUUID(){
+
+    let text =
+    document.getElementById("uuid")
+    .innerText;
+
+
+    if(text==="Click generate")
+        return;
+
+
+    navigator.clipboard.writeText(text);
+
+
+    let btn =
+    document.querySelector(".copy");
+
+
+    btn.innerText="Copied ✓";
+
+
+    setTimeout(()=>{
+
+        btn.innerText="Copy";
+
+    },1500);
+
+
+}
+
+
+
+generateUUID();
+
+
+</script>
+
+
+</body>
+</html>
